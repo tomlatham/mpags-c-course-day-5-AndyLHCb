@@ -1,0 +1,12 @@
+//! Unit Tests for MPAGSCipher VigenereCipher Class
+#define CATCH_CONFIG_MAIN
+#include "catch.hpp"
+
+#include "VigenereCipher.hpp"
+
+TEST_CASE("Vigenere Cipher encryption", "[vigenere]"){
+	VigenereCipher cc{"HELLOTHERE"};
+	
+	REQUIRE( cc.applyCipher("VERYWORRYINGLYLONGSTRINGWHICHHOPEFULLYWILLTESTALLCASES", CipherMode::Encrypt) == "CICJKHYVPMUKWJZHUKJXYMYRKAPGYLVTPQIESCNMSPEPGMHPCGHWPD" );
+	REQUIRE( cc.applyCipher("CICJKHYVPMUKWJZHUKJXYMYRKAPGYLVTPQIESCNMSPEPGMHPCGHWPD", CipherMode::Decrypt) == "VERYWORRYINGLYLONGSTRINGWHICHHOPEFULLYWILLTESTALLCASES" );
+}

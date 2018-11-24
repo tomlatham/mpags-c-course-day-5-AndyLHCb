@@ -12,6 +12,7 @@ project(MPAGSCipher VERSION 0.4.0)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
 # - Don't allow C++ Compiler Vendor Extensions
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # - Use our standard set of flags

@@ -1,6 +1,9 @@
 #ifndef CYPHER_ABSTRACT_BASE_CLASS
 #define CYPHER_ABSTRACT_BASE_CLASS
 
+#include<string>
+#include"CipherMode.hpp"
+
 /**
  * \file Cipher.hpp
  * \brief Contains the declarations of a purely abstract base class for use on general ciphers

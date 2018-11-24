@@ -8,6 +8,7 @@
 #include "CaesarCipher.hpp"
 #include "VigenereCipher.hpp"
 #include "PlayfairCipher.hpp"
+#include "CipherFactory.hpp"
 
 bool testCipher( const Cipher& cipher,
 								 const CipherMode mode,
@@ -19,28 +20,43 @@ bool testCipher( const Cipher& cipher,
 }
 
 TEST_CASE("Cipher Inheretance Caesar","[Caesar]"){
-	CaesarCipher caesar(1);
+	auto caesar = cipherFactory( CipherType::Caesar , "1" );
 	
-	REQUIRE(testCipher(caesar,
+	REQUIRE(testCipher( *caesar,
 										CipherMode::Encrypt,
 										"ABCDWXYZ",
 										"BCDEXYZA"));
+
+  REQUIRE(testCipher( *caesar,
+										CipherMode::Decrypt,
+										"BCDEXYZA",
+										"ABCDWXYZ"));
 }
 
 TEST_CASE("Cipher Inheretance Playfair","[Playfair]"){
-	PlayfairCipher playfair("THEQUICKBROWNFOXJUMPSOVERTHELAZYDOG");
+	auto playfair = cipherFactory( CipherType::Playfair, "TEST" );
 
-	REQUIRE(testCipher(playfair,
+	REQUIRE(testCipher(*playfair,
 										CipherMode::Encrypt,
-										"WAFFLEMEISTERISCLOSED",
-										"OZXOXVTSTKMEUKKMRPNMQY"));
+										"THISISATESTOFTHEPLAYFAIRCIPHER",
+										"BCLTLTBESACVCSDBQKGAGSMOIOUDAP"));
+
+	REQUIRE(testCipher(*playfair,
+										CipherMode::Decrypt,
+										"BCLTLTBESACVCSDBQKGAGSMOIOUDAP",
+										"THISISATESTOFTHEPLAYFAIRCIPHER"));
 }
 
 TEST_CASE("Cipher Inheretance Vigenere","[Vigenere]"){
-	VigenereCipher vigenere("SOMELOOP");
+	auto vigenere = cipherFactory( CipherType::Vigenere , "SOMELOOP" );
 
-	REQUIRE(testCipher(vigenere,
+	REQUIRE(testCipher(*vigenere,
 										CipherMode::Encrypt,
 										"WAFFLEMEISTERISBACKOPEN",
 										"OORJWSATAGFICWGQSQWSASB"));
+
+	REQUIRE(testCipher(*vigenere,
+										CipherMode::Decrypt,
+										"OORJWSATAGFICWGQSQWSASB",
+										"WAFFLEMEISTERISBACKOPEN"));
 }

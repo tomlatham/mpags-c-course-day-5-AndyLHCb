@@ -16,11 +16,18 @@
 class Cipher{
 	public:
 		//Default stuff requried for the pABC
+
+		/// Default constructor
 		Cipher () = default;
+		/// Copy constructor
 		Cipher (const Cipher& rhs) = default;
+		/// Move constructor
 		Cipher (Cipher&& rhs) = default;
+		/// Copy-assignement operator
 		Cipher& operator=(const Cipher& rhs) = default;
+		/// Move-assignement operator
 		Cipher& operator=(Cipher&& rhs) = default;
+		/// Destructor
 		virtual ~Cipher() = default;
 
 		/**

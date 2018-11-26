@@ -3,8 +3,7 @@
 #include"PlayfairCipher.hpp"
 #include"VigenereCipher.hpp"
 
-std::unique_ptr<Cipher> cipherFactory(const CipherType cipher,
-																			const std::string key )
+std::unique_ptr<Cipher> cipherFactory(const CipherType cipher, const std::string key )
 {
 	switch(cipher)
 	{
@@ -19,6 +18,6 @@ std::unique_ptr<Cipher> cipherFactory(const CipherType cipher,
 	}
 
 	//This should never be used and is just a return to make the compiler happy
-	return std::make_unique<CaesarCipher>( key );
+	return std::unique_ptr<Cipher>();
 }
 

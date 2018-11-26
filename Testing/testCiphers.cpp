@@ -1,6 +1,8 @@
 //! Unit Tests for MPAGSCipher Cipher pABC
 #define CATCH_CONFIG_MAIN
 #include <iostream>
+#include <memory>
+#include <vector>
 #include "catch.hpp"
 
 #include "CipherMode.hpp"
@@ -19,7 +21,7 @@ bool testCipher( const Cipher& cipher,
 	return output == expectedOutput;
 }
 
-TEST_CASE("Cipher Inheretance Caesar","[Caesar]"){
+TEST_CASE("Cipher Inheritance Caesar","[Caesar]"){
 	auto caesar = cipherFactory( CipherType::Caesar , "1" );
 	
 	REQUIRE(testCipher( *caesar,
@@ -33,7 +35,7 @@ TEST_CASE("Cipher Inheretance Caesar","[Caesar]"){
 										"ABCDWXYZ"));
 }
 
-TEST_CASE("Cipher Inheretance Playfair","[Playfair]"){
+TEST_CASE("Cipher Inheritance Playfair","[Playfair]"){
 	auto playfair = cipherFactory( CipherType::Playfair, "TEST" );
 
 	REQUIRE(testCipher(*playfair,
@@ -47,7 +49,7 @@ TEST_CASE("Cipher Inheretance Playfair","[Playfair]"){
 										"THISISATESTOFTHEPLAYFAIRCIPHER"));
 }
 
-TEST_CASE("Cipher Inheretance Vigenere","[Vigenere]"){
+TEST_CASE("Cipher Inheritance Vigenere","[Vigenere]"){
 	auto vigenere = cipherFactory( CipherType::Vigenere , "SOMELOOP" );
 
 	REQUIRE(testCipher(*vigenere,
@@ -59,4 +61,28 @@ TEST_CASE("Cipher Inheretance Vigenere","[Vigenere]"){
 										CipherMode::Decrypt,
 										"OORJWSATAGFICWGQSQWSASB",
 										"WAFFLEMEISTERISBACKOPEN"));
+}
+
+TEST_CASE("Cipher collections","[Cipher]"){
+
+  std::vector<std::unique_ptr<Cipher>> ciphers;
+  ciphers.push_back( cipherFactory(CipherType::Caesar,  "1") );
+  ciphers.push_back( cipherFactory(CipherType::Playfair,"TEST") );
+  ciphers.push_back( cipherFactory(CipherType::Vigenere,"SOMELOOP") );
+
+  std::vector<std::string> plainText;
+  plainText.push_back("ABCDWXYZ");
+  plainText.push_back("THISISATESTOFTHEPLAYFAIRCIPHER");
+  plainText.push_back("WAFFLEMEISTERISBACKOPEN");
+
+  std::vector<std::string> cipherText;
+  cipherText.push_back("BCDEXYZA");
+  cipherText.push_back("BCLTLTBESACVCSDBQKGAGSMOIOUDAP");
+  cipherText.push_back("OORJWSATAGFICWGQSQWSASB");
+
+  for ( size_t i{0}; i < ciphers.size(); ++i ) {
+    REQUIRE( ciphers[i] );
+    REQUIRE( testCipher( *ciphers[i], CipherMode::Encrypt, plainText[i], cipherText[i]) );
+    REQUIRE( testCipher( *ciphers[i], CipherMode::Decrypt, cipherText[i], plainText[i]) );
+  }
 }

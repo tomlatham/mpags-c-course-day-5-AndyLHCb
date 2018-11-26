@@ -14,7 +14,7 @@
 #include"Cipher.hpp"
 
 /**
- * \file VigenereCipher
+ * \file VigenereCipher.hpp
  * \brief Contains the declaration of the VigenereCipher class
  */
 

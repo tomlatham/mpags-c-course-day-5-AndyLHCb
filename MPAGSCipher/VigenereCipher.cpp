@@ -38,10 +38,9 @@ void VigenereCipher::setKey( const std::string& key )
 
 		// Create a CaesarCipher using this position as a key
 		CaesarCipher cipher( letterPos );
-		auto pair{ std::make_pair( c, cipher) };
 
 		// Insert a std::pair of the letter and CaesarCipher into the lookup
-		charLookup_.insert( pair );
+		charLookup_.insert( std::make_pair( c, cipher ) );
 	}
 	std::cout << "KEY:" << tempKey << std::endl;
 	key_ = tempKey;
